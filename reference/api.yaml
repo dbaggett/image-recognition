@@ -1,0 +1,120 @@
+openapi: 3.1.0
+x-stoplight:
+  id: yrqhp7lfehvqa
+info:
+  title: image-recognition-api
+  version: '1.0'
+  summary: Image Recognition API
+  description: Facades the Imagga API for image recognition and tagging while also provding endpoints to query image metadata.
+servers:
+  - url: 'http://localhost:8020'
+paths:
+  /images:
+    post:
+      summary: Analyze Image
+      operationId: post-images
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageResponse'
+        '400':
+          description: Bad Request
+        '422':
+          description: Unprocessable Entity (WebDAV)
+      description: Analyzes the provided image data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                imageUrl:
+                  type: string
+                  x-stoplight:
+                    id: gqq608nrv0lwu
+                  description: Image URL
+                label:
+                  type: string
+                  x-stoplight:
+                    id: ocltm8wybe52f
+                  description: Image label
+                enableObjectDetection:
+                  type: boolean
+                  x-stoplight:
+                    id: wly8ybt1olxfi
+                  description: Enable object detection in Imagga
+              required:
+                - imageUrl
+    get:
+      summary: Retrieve Image Metadata
+      operationId: get-images
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ImageResponse'
+                  x-stoplight:
+                    id: gpzi9g96l7yms
+      parameters:
+        - schema:
+            type: string
+            example: plane,train
+          in: query
+          name: objects
+          description: Objects to filter by
+      description: Retrieve image metadata.
+  '/images/{imageId}':
+    parameters:
+      - schema:
+          type: string
+        name: imageId
+        in: path
+        required: true
+    get:
+      summary: Retrieve Single Image
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageResponse'
+      operationId: get-images-imageId
+      description: Retrieve metadata for specific image.
+components:
+  schemas:
+    ImageResponse:
+      title: ImageResponse
+      x-stoplight:
+        id: wy5dynluir26o
+      type: object
+      properties:
+        id:
+          type: number
+          description: Image identifier
+        label:
+          type: string
+          x-stoplight:
+            id: ssvp7vhywmtq5
+          description: Image label
+        objects:
+          type: array
+          x-stoplight:
+            id: 42w9rzln5jbcm
+          description: Detected objects from Imagga tags
+          items:
+            x-stoplight:
+              id: wau8sk278bagk
+            type: string
+      required:
+        - id
+        - label
+        - objects

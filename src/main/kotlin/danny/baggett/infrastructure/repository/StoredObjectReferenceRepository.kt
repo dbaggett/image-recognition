@@ -1,0 +1,9 @@
+package danny.baggett.infrastructure.repository
+
+import danny.baggett.infrastructure.repository.model.StoredObjectReference
+import danny.baggett.infrastructure.repository.model.StoredObjectReferenceId
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
+
+@Repository
+interface StoredObjectReferenceRepository : JpaRepository<StoredObjectReference, StoredObjectReferenceId>

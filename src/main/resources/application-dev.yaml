@@ -1,0 +1,16 @@
+server:
+  port: 8020
+spring:
+  datasource:
+    url: ${DB_HOST}
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+imagga:
+  baseUrl: https://api.imagga.com/v2
+  apiKey: ${IMAGGA_API_KEY:acc_feb8486a54c3107}
+  secret: ${IMAGGA_SECRET:059dccf3ac25301ada412267ff2a2e45}
+analysis:
+  confidenceThreshold: 30.0
