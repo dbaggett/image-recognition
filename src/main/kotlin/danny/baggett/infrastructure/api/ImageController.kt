@@ -3,7 +3,7 @@ package danny.baggett.infrastructure.api
 import danny.baggett.infrastructure.api.model.ImageSubmissionRequest
 import danny.baggett.infrastructure.api.model.toImageResponse
 import danny.baggett.model.service.MetaService
-import org.springframework.validation.annotation.Validated
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 class ImageController(private val metaService: MetaService) {
 
     @PostMapping
-    suspend fun submitImage(@Validated @RequestBody imageSubmissionRequest: ImageSubmissionRequest) = metaService
+    suspend fun submitImage(@Valid @RequestBody imageSubmissionRequest: ImageSubmissionRequest) = metaService
         .analyzeAndSave(imageSubmissionRequest.toPreAnalyzedImage())
         .map { it.toImageResponse() }
         .toResponse()
